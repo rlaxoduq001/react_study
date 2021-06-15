@@ -1,25 +1,128 @@
-import logo from './logo.svg';
+/* eslint-disable */
+
 import './App.css';
+import { Navbar, Container, Nav, NavDropdown, Jumbotron, Button, Modal } from 'react-bootstrap';
+import {useState} from 'react';
+import shopData from './data';
+
+// 라우팅
+import { Link, Route, Switch } from 'react-router-dom'
 
 function App() {
+
+  const [shoes, setstate] = useState(shopData);
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <Navbar bg="light" expand="lg">
+        <Container>
+          <Navbar.Brand href="#home">shoes Shop</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              <Nav.Link href="#home">Home</Nav.Link>
+              <Nav.Link href="#link">Link</Nav.Link>
+              <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+
+
+
+      {
+      /* 라우터 exact : 패스가 딱 맞을때 */
+      }
+      <Route exact path="/">
+
+        <Jumbotron className="main_background">
+          <h1>20% season Off</h1>
+          <p>
+            This is a simple hero unit, a simple jumbotron-style component for calling
+            extra attention to featured content or information.
+          </p>
+          <p>
+            <Button variant="primary">Learn more</Button>
+          </p>
+        </Jumbotron>
+
+        <div className="container">
+          <div className="row">
+            {
+              shoes.map( (shoseInfo,i) => {
+                return (
+                  <ShopList shoesData={shoseInfo} key={i}></ShopList>
+                )
+              })
+            }
+          </div>
+        </div>
+
+      </Route>
+      
+      <Route path="/detail">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6">
+              <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+            </div>
+            <div className="col-md-6 mt-4">
+              <h4 className="pt-5">상품명</h4>
+              <p>상품설명</p>
+              <p>120000원</p>
+              <button className="btn btn-danger">주문하기</button> 
+            </div>
+          </div>
+      </div> 
+      </Route>
+      {/* <Route path="/" component={Modal}></Route> */}
+
+
+
+      
+
+      {/* <div className="container">
+        <div className="row">
+          <div className="col-md-4">
+            <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%"></img>
+            <h4>{shoes[0].title}</h4>
+            <p>{shoes[0].content} & {shoes[0].price}</p>
+          </div>
+          <div className="col-md-4">
+            <img src="https://codingapple1.github.io/shop/shoes2.jpg" width="100%"></img>
+            <h4>상품명</h4>
+            <p>상품설명 & 가격</p>
+          </div>
+          <div className="col-md-4">
+            <img src="https://codingapple1.github.io/shop/shoes3.jpg" width="100%"></img>
+            <h4>상품명</h4>
+            <p>상품설명 & 가격</p>
+          </div>
+        </div>
+      </div> */}
+
     </div>
   );
+}
+
+
+function ShopList(props) {
+ 
+  return (
+  
+    <div className="col-md-4">
+      <img src={props.shoesData.img} width="100%"></img>
+      <h4>{props.shoesData.title}</h4>
+      <p>{props.shoesData.price}</p>
+    </div>
+  )
 }
 
 export default App;
