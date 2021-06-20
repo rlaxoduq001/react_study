@@ -1,0 +1,52 @@
+
+// 임폴트
+@import './reset.scss';
+
+// 변수만들때
+$mainColor : blue;
+
+.blue {
+  color: $mainColor;
+}
+
+// 함수
+// @mixin 함수 {
+//   background-color: #eeeeee;
+//   padding: 20px;
+//   border-radius: 5px;
+//   max-width: 500px;
+//   width: 100%;
+//   margin:  auto;
+// }
+
+.my-alert {
+  background-color: #eeeeee;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 100%;
+  margin:  auto;
+  //@include 함수()
+}
+
+.my-alert {
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.my-alert-blue {
+  @extend .my-alert;
+  background: blue;
+}
+
+
+// nesting 문법
+// div.container {
+//   h4 {
+//     color: blue;
+//   }
+//   p {
+//     color: green;
+//   }
+// }
