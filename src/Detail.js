@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import './Detail.scss'
@@ -16,7 +16,40 @@ const TitleBox = styled.h4`
   color : ${ props => props.color }
 `;
 
+
+// class 함수 생명주기
+// componentDidMount() : 렌더링될때
+// componetWillUnmount() : 사라질때
+// 신문법은 useEffect()
+
+
 function Detail(props) {
+
+
+  const [alertTime, setalertTime] = useState(true);
+  const [inputData, setinputData] = useState('');
+  // 라이플사이클 훅
+  // useEffect : 컴포넌트가 연결될때, update될때
+  useEffect(() => {
+
+    let timer = setTimeout(()=>{
+      setalertTime(false);
+    },2000);
+    
+    // 컴포넌트가 사라질때
+    return () => {
+      // 디테일 컴포넌트가 사라질때 실행
+      clearTimeout(timer);
+    } 
+
+  // 업데이트 될때도 실행되는데 막는법 [] <= 실행조건 (alertTime 스테이트가 변경이 될때만)
+  // [] 빈값일경우? detail 컴포넌트가 업데이트 될때 실행이 안됨
+  }, [alertTime]);
+
+  // 실행할 코드가 많을때 useEffect 많이 사용 (순서대로 실행됨)
+  // useEffect(() => {})
+  // useEffect(() => {})
+
 
   // useParams 라우터 훅 파라미터 넘길때
   let { id } = useParams();
@@ -38,13 +71,21 @@ function Detail(props) {
         <TitleBox color={'red'}>제목</TitleBox> */}
       </DivBox>
 
-      <div className="my-alert">
-        <p>재고가 얼마 남지 않았습니다.</p>
-      </div>
+      {inputData}
+      <input onChange={e => {setinputData(e.target.value)}}/>
 
-      <div className="my-alert-blue">
+      {
+        alertTime == true ? 
+        <div className="my-alert">
+          <p>재고가 얼마 남지 않았습니다.</p>
+        </div>
+      : 
+        null
+      }
+      
+      {/* <div className="my-alert-blue">
         <p>재고가 얼마 남지 않았습니다.</p>
-      </div>
+      </div> */}
 
       <div className="row">
         <div className="col-md-6">
