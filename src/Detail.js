@@ -43,7 +43,7 @@ function Detail(props) {
     } 
 
   // 업데이트 될때도 실행되는데 막는법 [] <= 실행조건 (alertTime 스테이트가 변경이 될때만)
-  // [] 빈값일경우? detail 컴포넌트가 업데이트 될때 실행이 안됨
+  // [] 빈값일경우? detail 컴포넌트가 업데이트 될때 실행이 안됨 ( 첫컴포넌트 뜰때만 )
   }, [alertTime]);
 
   // 실행할 코드가 많을때 useEffect 많이 사용 (순서대로 실행됨)
@@ -95,7 +95,10 @@ function Detail(props) {
           <h4 className="pt-5">{findShose.title}</h4>
           <p>{findShose.content}</p>
           <p>{findShose.price}</p>
-          <button className="btn btn-danger">주문하기</button> 
+
+          <Info stock={props.stock}></Info>
+
+          <button className="btn btn-danger" onClick={() => {props.setstock([9,11,12])} }>주문하기</button> 
           <button className="btn btn-danger" onClick={ () => { 
             history.goBack(); 
             // history.push('/asd')   <== 원하는 url로 이동
@@ -103,6 +106,13 @@ function Detail(props) {
         </div>
       </div>
   </div> 
+  )
+}
+
+function Info(props) {
+
+  return (
+    <p>재고 : {props.stock[0]}</p>
   )
 }
 

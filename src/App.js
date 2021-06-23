@@ -5,13 +5,15 @@ import { Navbar, Container, Nav, NavDropdown, Jumbotron, Button, Modal } from 'r
 import {useState} from 'react';
 import shopData from './data';
 import Detail from './Detail'
+import axios from 'axios';
 
 // 라우팅
 import { Link, Route, Switch } from 'react-router-dom'
 
 function App() {
 
-  const [shoes, setstate] = useState(shopData);
+  const [shoes, setshoes] = useState(shopData);
+  const [stock, setstock] = useState([10,11,12]);
   
   return (
     <div className="App">
@@ -65,11 +67,33 @@ function App() {
               }
             </div>
           </div>
+            
+          
+          <Button className="btn btn-primary" onClick={() => {
+
+            // 로딩중 UI
+
+            axios.get('https://codingapple1.github.io/shop/data2.json')
+            // 성공
+            .then((result) => {
+
+              // 로딩중 UI 안보이게
+              setshoes( [ ...shoes , ...result.data] );
+              console.log(setshoes);
+            })
+            // 실패
+            .catch(() => {})
+
+          }}>더보기</Button>
+
 
         </Route>
           
+
+
+
         <Route path="/detail/:id">
-          <Detail shoes={shoes}></Detail>
+          <Detail shoes={shoes} stock={stock} setstock={setstock}></Detail>
         </Route>
 
         
