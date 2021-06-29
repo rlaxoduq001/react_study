@@ -2,10 +2,13 @@
 
 import './App.css';
 import { Navbar, Container, Nav, NavDropdown, Jumbotron, Button, Modal } from 'react-bootstrap';
-import {useState} from 'react';
+import React ,{useState,useContext} from 'react';
 import shopData from './data';
 import Detail from './Detail'
 import axios from 'axios';
+
+
+let stockContext = React.createContext();
 
 // 라우팅
 import { Link, Route, Switch } from 'react-router-dom'
@@ -57,15 +60,26 @@ function App() {
           </Jumbotron>
 
           <div className="container">
+
+            {/* context 범위 지정 */}
+            <stockContext.Provider value={stock}>
+              
+            
+
             <div className="row">
               {
                 shoes.map( (shoseInfo,i) => {
                   return (
-                    <ShopList shoesData={shoseInfo} key={i}></ShopList>
+                    <ShopList shoesData={shoseInfo} i={i} key={i}></ShopList>
                   )
                 })
               }
             </div>
+
+
+            </stockContext.Provider>
+
+
           </div>
             
           
@@ -134,15 +148,29 @@ function App() {
 }
 
 function ShopList(props) {
- 
+  
+  let stock = useContext(stockContext);
+
   return (
   
     <div className="col-md-4">
       <img src={props.shoesData.img} width="100%"></img>
       <h4>{props.shoesData.title}</h4>
       <p>{props.shoesData.price}</p>
+
+      <Test></Test>
+      {/* {stock[props.i]} */}
     </div>
 
+  )
+}
+
+function Test() {
+  
+  let stock = useContext(stockContext);
+
+  return (
+    <p>재고 : {stock}</p>
   )
 }
 
