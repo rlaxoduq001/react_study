@@ -2,9 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { Nav } from 'react-bootstrap';
 import styled from 'styled-components';
 import './Detail.scss'
-
+import {CSSTransition} from 'react-transition-group';
 
 // styled components 만드는법
 const DivBox = styled.div`
@@ -24,7 +25,10 @@ const TitleBox = styled.h4`
 
 
 function Detail(props) {
-
+  // 탭
+  const [tabs, settabs] = useState(0);
+  // 애니메이션스위치
+  const [aniSwitch, setaniSwitch] = useState(false);
 
   const [alertTime, setalertTime] = useState(true);
   const [inputData, setinputData] = useState('');
@@ -105,8 +109,39 @@ function Detail(props) {
             }}>뒤로가기</button> 
         </div>
       </div>
+
+
+      <Nav className="mt-5" variant="tabs" defaultActiveKey="link-0">
+        <Nav.Item>
+          <Nav.Link eventKey="link-0" onClick={ () => { setaniSwitch(false); settabs(0)} }>Active</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="link-1" onClick={ () => { setaniSwitch(false); settabs(1)} }>Option 2</Nav.Link>
+        </Nav.Item>
+      </Nav>
+        
+      <CSSTransition in={aniSwitch} classNames="wow" timeout={500}>
+        <TabContent tabInfo={tabs} setaniSwitch={setaniSwitch}></TabContent>
+      </CSSTransition>
+
   </div> 
   )
+}
+
+function TabContent(props) {
+
+  useEffect(() => {
+    props.setaniSwitch(true);
+  });
+
+  if(props.tabInfo === 0) {
+    return <div>0번째 내용</div>
+  } else if(props.tabInfo === 1) {
+    return <div>1번째 내용</div>
+  }  else if(props.tabInfo === 2) {
+    return <div>2번째 내용</div>
+  }
+
 }
 
 function Info(props) {

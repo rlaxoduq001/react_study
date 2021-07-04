@@ -50,3 +50,14 @@ $mainColor : blue;
 //     color: green;
 //   }
 // }
+
+
+// 애니메이션
+.wow-enter {
+  opacity: 0;
+}
+
+.wow-enter-active {
+  opacity: 1;
+  transition: all 1500ms;
+}
